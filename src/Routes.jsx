@@ -1,38 +1,20 @@
-import React from "react";
-import {useNavigate,useRoutes } from "react-router-dom";
-
-
-//pageslist
-
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import singup from "./pages/singup";
-import Profile from "./pages/Profile";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import { useAuth } from "./authContext";
-import { useEffect } from "react";
-
+import { Navigate, useRoutes } from "react-router-dom";
+import Login from "./components/auth/Login";
+import Singup from "./components/auth/Singup";
+import Profile from "./components/user/Profile";
+import Dashboard from "./components/dashboard/Dashboard";
 
 const ProjectRoutes = () => {
- 
-    const { currentUser,setcurrentUser } = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!currentUser) {
-            navigate("/login");
-        }
-    }, [currentUser, navigate]);
-
     const routes = [
-        { path: "/", element: <Home /> },
+        { path: "/", element: <Navigate to="/login" replace /> },
         { path: "/login", element: <Login /> },
-        { path: "/signup", element: <singup /> },
+        { path: "/signup", element: <Singup /> },
         { path: "/profile", element: <Profile /> },
-        { path: "/register", element: <Register /> },
-        { path: "/dashboard", element: <Dashboard /> }
+        { path: "/dashboard", element: <Dashboard /> },
+        { path: "*", element: <Navigate to="/login" replace /> },
     ];
 
     return useRoutes(routes);
-}
+};
+
+export default ProjectRoutes;
